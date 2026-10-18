@@ -1,40 +1,42 @@
-# Calibration & Track Tuning Guide
+# Quy Trình Căn Chỉnh & Tinh Chỉnh Thông Số Trên Sa Hình
 
-Instructions for calibrating the optical line sensors, motor trim gain, and tuning control parameters for competition tracks.
-
----
-
-## 1. Sensor Calibration
-
-1. **Height Adjustment**: Ensure the front IR sensor array is positioned **3 mm - 5 mm** above the competition surface. Excessive height reduces contrast; insufficient height risks scraping on track seams.
-2. **Threshold Setting**:
-   - Place the robot over white reflective floor: Sensor output must read logic `0` (or `1` depending on active level).
-   - Place each sensor over black vinyl tape: Sensor output must switch reliably.
-   - If using the onboard ATmega comparator/ADC frontend, trigger the `Kali` pushbutton to store black and white threshold values in EEPROM.
+Hướng dẫn chi tiết cách căn chỉnh cảm biến quang học, bù sai lệch tốc độ hai motor và hiệu chỉnh thông số điều khiển PID cho xe thi đấu.
 
 ---
 
-## 2. Motor Trim Gain Calibration
+## 1. Căn Chỉnh Cảm Biến Quang Học
 
-Due to manufacturing tolerances in DC motors and gearbox friction, one motor will often spin slightly faster than the other. The Verilog RTL provides dedicated trim gain parameters in [`firmware/gowin_fpga/src/main.v`](../firmware/gowin_fpga/src/main.v#L15-L16):
+1. **Khoảng Cách Mặt Sàn**: Đảm bảo khoảng cách từ thanh cảm biến tới mặt sàn nằm trong khoảng **3 mm - 5 mm**. Nếu quá cao, độ tương phản quang học sẽ yếu; nếu quá sát đất, xe dễ bị chạm gầm khi qua các mối nối bạt sân thi đấu.
+2. **Kiểm Tra Ngưỡng Tín Hiệu**:
+   - Đặt xe lên nền bạt trắng: Đèn LED báo trên bo mạch cảm biến phải tắt (hoặc bật tùy theo mức tích cực).
+   - Đặt từng mắt cảm biến lên vạch đen: Đèn LED phải chuyển trạng thái rõ ràng, dứt khoát.
+   - Nếu dùng mạch tiền xử lý ATmega, nhấn nút nhấn `Kali` trên bo mạch để mạch tự động lưu ngưỡng trắng/đen vào bộ nhớ EEPROM.
+
+---
+
+## 2. Bù Sai Lệch Tốc Độ Giữa Hai Động Cơ (Motor Trim Gain)
+
+Do dung sai chế tạo cơ khí và lực ma sát hộp số, hai động cơ DC khi cấp cùng mức PWM sẽ có tốc độ quay chênh lệch nhẹ. Mã nguồn Verilog cung cấp sẵn hai thông số bù tỉ lệ phần trăm tại [`firmware/gowin_fpga/src/main.v`](../firmware/gowin_fpga/src/main.v#L15-L16):
 
 ```verilog
-parameter integer GAIN_PWMA_PCT = 98;  // Left Motor Trim (Percentage)
-parameter integer GAIN_PWMB_PCT = 100; // Right Motor Trim (Percentage)
+parameter integer GAIN_PWMA_PCT = 98;  // Bù công suất Bánh Trái (Phần trăm %)
+parameter integer GAIN_PWMB_PCT = 100; // Bù công suất Bánh Phải (Phần trăm %)
 ```
 
-- If the robot pulls to the right on straight tracks: Decrease `GAIN_PWMB_PCT` or increase `GAIN_PWMA_PCT`.
-- If the robot pulls to the left: Decrease `GAIN_PWMA_PCT` or increase `GAIN_PWMB_PCT`.
+- Nếu xe chạy trên đường thẳng có xu hướng nhao về bên Phải: Giảm `GAIN_PWMB_PCT` hoặc tăng `GAIN_PWMA_PCT`.
+- Nếu xe chạy trên đường thẳng có xu hướng nhao về bên Trái: Giảm `GAIN_PWMA_PCT` hoặc tăng `GAIN_PWMB_PCT`.
 
 ---
 
-## 3. High-Speed Track Tuning Parameters
+## 3. Tinh Chỉnh Thông Số PID Khi Chạy Đua Tốc Độ Cao
 
-| Parameter in `main.v` | Default | Description | Tuning Tip |
+Các tham số chính trong file `main.v` cần hiệu chỉnh theo từng loại sa hình:
+
+| Tham số trong `main.v` | Giá trị mặc định | Ý nghĩa chức năng | Hướng dẫn tinh chỉnh |
 | :--- | :---: | :--- | :--- |
-| `DUTY_FAST` | 60% | Cruising speed on normal curved track | Increase for faster overall lap times |
-| `DUTY_STRAIGHT` | 60% | Maximum speed on confirmed straight track | Can be tuned up to 80-90% on long straights |
-| `DUTY_SLOW` | 12% | Minimum speed during hard corners | Increase if the car stalls; decrease if car skids off |
-| `FZ_STEER_HARD` | 35% | Maximum steering torque vector | Increase for hairpin / 90-degree corners |
-| `FZ_DAMPING` | 14% | Anti-fishtailing derivative counter-torque | Increase if vehicle wobbles on straight line |
-| `STRAIGHT_COUNT_GO` | 52 | Cycles needed to confirm straight line before boost | Decrease for earlier acceleration out of corners |
+| `DUTY_FAST` | 60% | Tốc độ chạy tuần tra trên cung cua thường | Tăng lên để cải thiện thời gian hoàn thành vòng đua |
+| `DUTY_STRAIGHT` | 60% | Tốc độ tối đa khi phát hiện đường thẳng | Có thể nâng lên 80% - 90% nếu sa hình có đoạn thẳng dài |
+| `DUTY_SLOW` | 12% | Tốc độ hãm khi vào cua gấp (gặp mắt ngoài) | Tăng nhẹ nếu xe bị khựng đứng; giảm nếu xe bị trượt văng khỏi cua |
+| `FZ_STEER_HARD` | 35% | Lực bẻ lái tối đa của khâu P | Tăng lên nếu xe không kịp quẹo qua các góc vuông 90 độ |
+| `FZ_DAMPING` | 14% | Lực hãm vi phân D chống văng lắc đuôi xe | Tăng lên nếu xe bị lắc lư hình sin (fishtailing) trên đường thẳng |
+| `STRAIGHT_COUNT_GO` | 52 | Số chu kỳ ổn định cần thiết trước khi boost ga | Giảm xuống nếu muốn xe tăng tốc sớm hơn khi vừa thoát cua |

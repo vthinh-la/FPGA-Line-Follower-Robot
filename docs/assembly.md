@@ -1,47 +1,47 @@
-# Assembly & Mechanical Integration Guide
+# Hướng Dẫn In 3D & Lắp Ráp Cơ Điện
 
-This guide details the fabrication, 3D printing, and mechanical/electronic assembly procedures for the FPGA High-Speed Line Follower Robot.
+Tài liệu hướng dẫn quy trình in 3D khung xe, lắp ráp cơ khí và hàn nối hệ thống điện tử cho Robot Dò Line FPGA.
 
 ---
 
-## 1. 3D Printing Specifications
+## 1. Thông Số Cài Đặt Khi In 3D
 
-The main chassis frame is located at [`mechanical/3d_models/chassis_frame.stl`](../mechanical/3d_models/chassis_frame.stl).
+File mô hình 3D khung xe: [`mechanical/3d_models/chassis_frame.stl`](../mechanical/3d_models/chassis_frame.stl).
 
-| Parameter | Recommended Value | Notes |
+| Thông số cài đặt | Giá trị khuyến nghị | Lưu ý kỹ thuật |
 | :--- | :--- | :--- |
-| **Material** | PLA+ / PETG / ABS | PETG or PLA+ recommended for impact resistance |
-| **Layer Height** | 0.20 mm | Standard quality |
-| **Infill Density** | 40% - 50% | High rigidity to prevent chassis flex under acceleration |
-| **Infill Pattern** | Gyroid / Honeycomb | Multi-directional structural strength |
-| **Wall Perimeters** | 4 walls (1.6 mm) | Reinforces motor mounting brackets |
-| **Top / Bottom Layers** | 4 / 4 | Prevents puncture from battery tie-downs |
-| **Supports** | Tree / Normal on motor mounts | Remove carefully after print |
+| **Vật liệu in** | PLA+ hoặc PETG | PETG cho độ bền cơ học cao, chống nứt gãy khi va chạm mạnh |
+| **Độ cao lớp in (Layer Height)** | 0.20 mm | Cân bằng giữa tốc độ in và độ bóng bề mặt |
+| **Mật độ điền đầy (Infill Density)** | 40% - 50% | Khung cần độ cứng vững cao để chống vặn xoắn khi tăng tốc |
+| **Kiểu điền đầy (Infill Pattern)** | Gyroid hoặc Honeycomb | Chịu lực va đập đa hướng |
+| **Số lớp thành (Wall Perimeters)** | 4 lớp (1.6 mm) | Tăng cường độ chịu lực tại vị trí hốc kẹp động cơ |
+| **Lớp mặt trên / dưới** | 4 lớp / 4 lớp | Chống thủng đáy khi siết ốc cố định pin LiPo |
+| **Support (Vật liệu đỡ)** | Bật Tree Support tại gá motor | Bóc tách cẩn thận sau khi hoàn tất |
 
 ---
 
-## 2. Assembly Sequence
+## 2. Trình Tự Lắp Ráp Xe
 
-### Step 1: Front Support Caster
-1. Press-fit the steel mini-ball caster into the front underside socket.
-2. Ensure the ball rolls freely in 360 degrees without binding.
+### Bước 1: Lắp Bi Cầu Dẫn Hướng Phía Trước
+1. Ép chặt cụm bi cầu kim loại vào hốc tròn ở mặt dưới mũi xe.
+2. Kiểm tra bằng tay đảm bảo bi xoay nhẹ nhàng 360 độ, không bị kẹt ba via nhựa.
 
-### Step 2: DC Motors & Hub Couplings
-1. Slide the two micro DC geared motors into the rear motor retaining cradles.
-2. Secure with M2 mounting screws.
-3. Fit the aluminum hub couplings onto the motor D-shafts and tighten the set screws.
-4. Mount the high-grip silicone tires onto the rims.
+### Bước 2: Lắp Động Cơ và Bánh Xe
+1. Luồn hai động cơ DC Micro vào hai rãnh giữ ở phía đuôi xe.
+2. Cố định bằng vít M2 và gá kẹp chắc chắn.
+3. Lắp khớp nối nhôm D-shaft vào trục động cơ, siết ốc chìm lục giác.
+4. Gắn vành bánh và lốp cao su silicon vào trục nhôm.
 
-### Step 3: Main Carrier Board & Tang Nano 9K
-1. Mount the custom carrier PCB onto the central chassis standoffs using M2.5 nylon screws.
-2. Insert the Sipeed Tang Nano 9K module into the female 2.54mm header strips with the USB-C port facing upward for accessible programming.
-3. Connect the TB6612FGN driver module to the motor terminal blocks.
+### Bước 3: Lắp Bo Mạch Chủ và Module Tang Nano 9K
+1. Gắn bo mạch carrier lên các trụ đỡ trên thân xe bằng vít nhựa nylon M2.5.
+2. Cắm module Sipeed Tang Nano 9K vào hàng rào cái (header), hướng cổng nạp USB-C lên trên để tiện cắm dây nạp code.
+3. Cắm module driver TB6612FGN vào socket tương ứng và siết dây động cơ vào cọc đấu nối vít.
 
-### Step 4: 8-Channel IR Sensor Bar
-1. Fasten the forward sensor wing to the front mounting plate using M3 screws.
-2. Ensure the sensors maintain a **3 mm to 5 mm clearance** above the ground track surface.
-3. Route the 10-pin ribbon cable back along the center channel to the carrier PCB connector `J1`.
+### Bước 4: Lắp Thanh Cảm Biến 8 Mắt Hồng Ngoại
+1. Bắt vít cố định thanh cảm biến dạng cánh cung vào gá đỡ phía trước mũi xe.
+2. Căn chỉnh khoảng cách: Khoảng cách từ mặt dưới cảm biến tới mặt sàn sa hình phải đạt từ **3 mm đến 5 mm**.
+3. Cắm cáp dẹp 10 sợi nối từ thanh cảm biến về cọc `J1` trên bo mạch chủ.
 
-### Step 5: Power & LiPo Retention
-1. Fasten the 3S LiPo battery in the central battery tray using a velcro strap.
-2. Verify that the master toggle switch is in the **OFF** position before connecting the XT30 power plug.
+### Bước 5: Cố Định Pin và Kiểm Tra Nguồn Điện
+1. Đặt pin LiPo 3S vào khoang chứa pin ở trung tâm thân xe, siết dây đai dán velcro cố định.
+2. Đảm bảo công tắc nguồn đang ở vị trí **TẮT (OFF)** trước khi cắm jack pin XT30.

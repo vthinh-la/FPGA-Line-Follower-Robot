@@ -1,20 +1,20 @@
-# Bill of Materials (BOM)
+# Danh Mục Vật Tư Linh Kiện (BOM)
 
-Detailed component breakdown for the FPGA High-Speed Line Follower Robot.
+Bảng kê chi tiết các linh kiện, module và vật tư chế tạo Robot Dò Line Tốc Độ Cao điều khiển bằng FPGA.
 
-| Item | Component | Reference / Model | Quantity | Package / Rating | Function |
-| :--- | :--- | :--- | :---: | :--- | :--- |
-| 1 | **FPGA Core Module** | Sipeed Tang Nano 9K | 1 | GW1NR-LV9QN88PC6/I5 (8640 LUT4, 27 MHz Crystal) | Main digital real-time control processor |
-| 2 | **Motor Driver IC** | Toshiba TB6612FGN | 1 | SSOP-24 Carrier Module (VM: 2.5-15V, 1.2A cont / 3.2A peak) | Dual DC H-Bridge driver for differential steering |
-| 3 | **DC Geared Motors** | N20 / Micro DC Motors | 2 | 6V-12V High-RPM (1000 - 3000 RPM) | Propulsion & differential steering |
-| 4 | **Power Buck Converter** | Mini360 DC-DC | 1 | Ultra-compact step-down module (Vin: 4.75-23V, Vout: 1-17V, 1.8A) | Steps down 11.1V/12V LiPo battery to 5.0V system bus |
-| 5 | **Linear Voltage Regulators** | AMS1117-3.3V / LT1117 | 2 | SOT-223 (3.3V, 1A) | Clean 3.3V power rails for FPGA I/O & logic |
-| 6 | **Line Sensor Array** | 8-Channel IR Optical Bar | 1 | Custom boomerang PCB with TCRT5000 / ITR9909 | Ground reflectance detection (line tracking) |
-| 7 | **Sensor ADC / Comparator** | ATmega328P / ATmega8 | 1 | TQFP-32 (Onboard carrier) | Analog sensor reading & digital thresholding |
-| 8 | **Anti-Reverse Diode** | 1N4007 | 1 | DO-41 (1A, 1000V) | Reverse polarity protection from battery |
-| 9 | **Battery Pack** | 3S LiPo Battery | 1 | 11.1V - 12.6V, 450mAh - 850mAh, 45C+ (XT30 connector) | Main power source |
-| 10 | **Decoupling Capacitors** | Ceramic SMD / Electrolytic | 4 | 100nF, 1uF, 10uF, 100uF | Power filtering & motor noise suppression |
-| 11 | **Power Switch** | Heavy-duty Toggle Switch | 1 | SPST / SPDT 3A+ | Master power switch |
-| 12 | **Front Support Caster** | Steel Ball Caster | 1 | Mini Omni ball transfer unit (Dia 8mm - 12mm) | Low friction front pivot point |
-| 13 | **Wheels & Hubs** | High-Grip Silicone Wheels | 2 | Aluminum D-shaft hub coupling + Silicon cast tire | Traction & power transfer |
-| 14 | **Chassis Frame** | 3D Printed Delta Body | 1 | PLA / PETG (`mechanical/3d_models/chassis_frame.stl`) | Aerodynamic lightweight structural frame |
+| STT | Tên Linh Kiện / Module | Mã Linh Kiện / Model | Số Lượng | Thông Số / Đóng Gói | Chức Năng Chính |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| 1 | **Module FPGA Trung Tâm** | Sipeed Tang Nano 9K | 1 | Chip Gowin GW1NR-LV9QN88PC6/I5 (8640 LUT4, Clock 27MHz) | Xử lý thuật toán PID, PWM và phanh chủ động |
+| 2 | **Driver Động Cơ Cầu H** | Toshiba TB6612FGN | 1 | Module chân cắm SSOP-24 (VM: 2.5-15V, dòng đỉnh 3.2A) | Dẫn động 2 động cơ DC độc lập |
+| 3 | **Động Cơ DC Giảm Tốc** | Micro DC Geared Motor | 2 | Điện áp 6V - 12V, Tốc độ cao 1000 - 3000 RPM | Truyền động vi sai 2 bánh sau |
+| 4 | **Mạch Hạ Áp DC-DC** | Mini360 Buck Converter | 1 | Siêu nhỏ gọn (Vin: 4.75-23V, Vout: 5.0V, dòng tải 1.8A) | Hạ áp xung từ pin LiPo 12V xuống 5V |
+| 5 | **IC Ổn Áp Tuyến Tính** | AMS1117-3.3V / LT1117 | 2 | Đóng gói SOT-223 (3.3V, dòng tải 1A) | Cấp nguồn 3.3V sạch cho FPGA và logic I/O |
+| 6 | **Thanh Cảm Biến Dò Line** | Mảng 8 Cảm Biến Hồng Ngoại | 1 | Bo mạch cong cánh cung (Dùng TCRT5000 / ITR9909) | Thu nhận độ tương phản đen/trắng mặt đường |
+| 7 | **Mạch Tiền Xử Lý / ADC** | ATmega328P / ATmega8 | 1 | Đóng gói TQFP-32 (Tích hợp trên bo carrier) | Đọc analog cảm biến và xuất mức logic cho FPGA |
+| 8 | **Diode Chống Ngược Cực** | 1N4007 | 1 | Đóng gói chân cắm DO-41 (1A, 1000V) | Bảo vệ toàn bộ hệ thống khi cắm nhầm cực pin |
+| 9 | **Pin Nguồn Năng Lượng** | Pin LiPo 3S | 1 | 11.1V - 12.6V, dung lượng 450mAh - 850mAh, dòng xả 45C+ | Nguồn cung cấp toàn bộ xe |
+| 10 | **Tụ Điện Lọc Nguồn** | Tụ gốm SMD và Tụ hóa | 4 | 100nF, 1uF, 10uF, 100uF | Lọc nhiễu cao tần và sụt áp khi khởi động motor |
+| 11 | **Công Tắc Bật Tắt** | Công tắc gạt cơ khí | 1 | Chịu dòng 3A+ | Bật tắt nguồn tổng của xe |
+| 12 | **Bánh Xe Đa Hướng Trước** | Bi cầu kim loại (Ball Caster) | 1 | Đường kính bi 8 mm - 12 mm | Điểm tựa trượt dẫn hướng phía mũi xe |
+| 13 | **Bánh Xe và Khớp Nối** | Bánh bọc cao su Silicon | 2 | Khớp nối trục nhôm D-shaft đường kính bánh 42 mm | Bám đường chống trượt quán tính khi bo cua |
+| 14 | **Khung Xe Cơ Khí** | Khung xe Delta in 3D | 1 | Nhựa in PLA+ hoặc PETG (`mechanical/3d_models/chassis_frame.stl`) | Khung gầm chịu lực và liên kết toàn bộ xe |

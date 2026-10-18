@@ -1,60 +1,60 @@
-# Pinout and Hardware Interconnect Guide
+# Bảng Tra Chân Kết Nối & Sơ Đồ Đấu Dây
 
-This document defines the complete physical pin mapping between the **Sipeed Tang Nano 9K (Gowin GW1NR-9)**, the **TB6612FGN Dual Motor Driver**, the **8-Channel IR Sensor Array**, and the **Power System**.
+Tài liệu định nghĩa chi tiết ánh xạ chân vật lý giữa **Sipeed Tang Nano 9K (Gowin GW1NR-9C)**, **Driver Động Cơ TB6612FGN**, **Thanh 8 Cảm Biến Hồng Ngoại** và **Hệ Thống Nguồn**.
 
 ---
 
-## 1. Tang Nano 9K Physical Constraints (CST) Mapping
+## 1. Bảng Ánh Xạ Chân FPGA (File CST)
 
-All FPGA pin assignments are specified in [`firmware/gowin_fpga/src/FPGA_DO_LINE.cst`](../firmware/gowin_fpga/src/FPGA_DO_LINE.cst):
+Các chân vật lý được khai báo trong file [`firmware/gowin_fpga/src/FPGA_DO_LINE.cst`](../firmware/gowin_fpga/src/FPGA_DO_LINE.cst):
 
-| Net / Port | FPGA Pin (GW1NR-9) | I/O Standard | Pull Mode | Drive | Target Peripheral | Description |
+| Tín Hiệu Trong RTL | Chân FPGA (GW1NR-9) | Chuẩn I/O | Kéo Lên | Dòng Lái | Thiết Bị Ngoại Vi | Chức Năng |
 | :--- | :---: | :--- | :--- | :---: | :--- | :--- |
-| `sys_clk` | **52** | LVCMOS33 | PULL_UP | - | Onboard Oscillator | 27.000 MHz system clock source |
-| `s1` | **38** | LVCMOS33 | PULL_UP | - | Sensor Bar Bit 0 | Outermost Left Sensor |
-| `s2` | **37** | LVCMOS33 | PULL_UP | - | Sensor Bar Bit 1 | Mid-Outer Left Sensor |
-| `s3` | **36** | LVCMOS33 | PULL_UP | - | Sensor Bar Bit 2 | Inner Left Sensor |
-| `s4` | **39** | LVCMOS33 | PULL_UP | - | Sensor Bar Bit 3 | Center-Left Sensor |
-| `s5` | **25** | LVCMOS33 | PULL_UP | - | Sensor Bar Bit 4 | Center-Right Sensor |
-| `s6` | **26** | LVCMOS33 | PULL_UP | - | Sensor Bar Bit 5 | Inner Right Sensor |
-| `s7` | **27** | LVCMOS33 | PULL_UP | - | Sensor Bar Bit 6 | Mid-Outer Right Sensor |
-| `s8` | **28** | LVCMOS33 | PULL_UP | - | Sensor Bar Bit 7 | Outermost Right Sensor |
-| `PWMA` | **33** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `PWMA` | Left Motor Speed (20 kHz PWM) |
-| `IN1` | **34** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `AIN2` | Left Motor Direction Bit 1 |
-| `IN2` | **40** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `AIN1` | Left Motor Direction Bit 2 |
-| `PWMB` | **35** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `PWMB` | Right Motor Speed (20 kHz PWM) |
-| `IN3` | **42** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `BIN1` | Right Motor Direction Bit 1 |
-| `IN4` | **41** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `BIN2` | Right Motor Direction Bit 2 |
+| `sys_clk` | **52** | LVCMOS33 | PULL_UP | - | Thạch anh bo mạch | Nguồn xung nhịp hệ thống 27 MHz |
+| `s1` | **38** | LVCMOS33 | PULL_UP | - | Cảm biến 1 | Mắt ngoài cùng bên Trái |
+| `s2` | **37** | LVCMOS33 | PULL_UP | - | Cảm biến 2 | Mắt lửng ngoài bên Trái |
+| `s3` | **36** | LVCMOS33 | PULL_UP | - | Cảm biến 3 | Mắt giữa bên Trái |
+| `s4` | **39** | LVCMOS33 | PULL_UP | - | Cảm biến 4 | Mắt tâm bên Trái |
+| `s5` | **25** | LVCMOS33 | PULL_UP | - | Cảm biến 5 | Mắt tâm bên Phải |
+| `s6` | **26** | LVCMOS33 | PULL_UP | - | Cảm biến 6 | Mắt giữa bên Phải |
+| `s7` | **27** | LVCMOS33 | PULL_UP | - | Cảm biến 7 | Mắt lửng ngoài bên Phải |
+| `s8` | **28** | LVCMOS33 | PULL_UP | - | Cảm biến 8 | Mắt ngoài cùng bên Phải |
+| `PWMA` | **33** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `PWMA` | Điều tốc PWM 20kHz Bánh Trái |
+| `IN1` | **34** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `AIN2` | Điều khiển chiều Bánh Trái Bit 1 |
+| `IN2` | **40** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `AIN1` | Điều khiển chiều Bánh Trái Bit 2 |
+| `PWMB` | **35** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `PWMB` | Điều tốc PWM 20kHz Bánh Phải |
+| `IN3` | **42** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `BIN1` | Điều khiển chiều Bánh Phải Bit 1 |
+| `IN4` | **41** | LVCMOS33 | PULL_UP | 8 mA | TB6612FGN `BIN2` | Điều khiển chiều Bánh Phải Bit 2 |
 
 ---
 
-## 2. TB6612FGN Dual H-Bridge Truth Table
+## 2. Bảng Trạng Thái Điều Khiển Driver Cầu H TB6612FGN
 
-The Verilog RTL drives the TB6612FGN H-Bridge to achieve 4 operational modes per channel:
+Mỗi kênh động cơ của TB6612FGN được RTL điều khiển theo 4 chế độ trạng thái:
 
-| IN1 / IN4 | IN2 / IN3 | PWM | Motor State | Function in Line Tracer |
+| IN1 / IN4 | IN2 / IN3 | PWM | Trạng Thái Động Cơ | Ý Nghĩa Trong Xe Dò Line |
 | :---: | :---: | :---: | :--- | :--- |
-| `1` | `0` | `Duty` | **Forward Drive** | Normal straight and gentle turning mode |
-| `0` | `1` | `Duty` | **Reverse Active Brake** | Dynamic cornering brake on inside wheel |
-| `1` | `1` | `x` | **Short Brake** | Instant motor lock |
-| `0` | `0` | `x` | **Coast / Stop** | Free wheeling |
+| `1` | `0` | `Duty` | **Quay Tiến (Forward)** | Chế độ chạy bình thường khi đi thẳng và cua nhẹ |
+| `0` | `1` | `Duty` | **Quay Lùi / Phanh Đảo Chiều (Reverse)** | Phanh chủ động bánh trong cua khi vào góc cua gắt |
+| `1` | `1` | `x` | **Phanh Ngắn (Short Brake)** | Khóa chập cuộn dây động cơ |
+| `0` | `0` | `x` | **Thả Trôi (Coast / Stop)** | Ngắt toàn bộ công suất motor |
 
 ---
 
-## 3. Power Distribution Architecture
+## 3. Sơ Đồ Khối Đấu Nguồn Chi Tiết
 
 ```text
-[ LiPo Battery 3S (11.1V - 12.6V) ]
+[ Pin LiPo 3S (11.1V - 12.6V) ]
                 |
-                +---> [ Toggle Switch ] ---> [ 1N4007 Reverse Diode ]
-                                                      |
-                                                      +-------------------------> TB6612FGN Motor Power (VM pin)
-                                                      |
-                                              [ Mini360 Buck DC-DC ]
-                                                      | (5.0V Bus)
-                                                      +-------------------------> Carrier VCC & Sensor VCC
-                                                      |
-                                              [ AMS1117-3.3V LDO ]
-                                                      | (3.3V Bus)
-                                                      +-------------------------> Tang Nano 9K VCCIO
+                +---> [ Công Tắc Gạt ] ---> [ Diode 1N4007 Chống Ngược ]
+                                                        |
+                                                        +-----------------------> Chân VM Driver TB6612FGN
+                                                        |
+                                                [ Mạch Buck Mini360 ]
+                                                        | (Đường Nguồn 5.0V)
+                                                        +-----------------------> VCC Cảm Biến và Mạch Đệm
+                                                        |
+                                                [ Ổn Áp AMS1117-3.3V ]
+                                                        | (Đường Nguồn 3.3V)
+                                                        +-----------------------> VCCIO và Lõi FPGA Tang Nano 9K
 ```

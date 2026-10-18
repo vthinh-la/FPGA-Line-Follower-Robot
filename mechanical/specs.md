@@ -1,16 +1,16 @@
-# Mechanical Specifications
+# Thông Số Kỹ Thuật Cơ Khí & Kích Thước Khung Xe
 
-Detailed physical dimensions, weight distribution, and chassis geometry for the FPGA High-Speed Line Follower Robot.
+Thông số hình học, trọng lượng và kích thước chi tiết của Robot Dò Line FPGA.
 
-| Dimension / Metric | Specification | Verification Method |
+| Chỉ số / Kích thước | Thông số kỹ thuật | Phương pháp xác minh |
 | :--- | :--- | :--- |
-| **Chassis Configuration** | 3-Wheel Delta Tricycle (2 Rear Drive, 1 Front Ball Caster) | Physical prototype |
-| **Overall Length** | ~230 mm | Measured |
-| **Track Width (Rear)** | ~165 mm | Measured |
-| **Wheelbase** | ~175 mm (Rear Axle to Front Caster) | Measured |
-| **Sensor Overhang** | ~35 mm (Front Caster to IR Sensor Plane) | Measured |
-| **Drive Wheel Diameter** | 42 mm (with silicone tire) | Measured |
-| **Tire Width** | 22 mm | Measured |
-| **Total Weight (w/o battery)** | ~210 g | Digital scale |
-| **Flying Weight (with 3S 650mAh)** | ~285 g | Digital scale |
-| **Center of Gravity (CoG)** | Low, biased 65% rearward over drive wheels | Design verification |
+| **Cấu hình dẫn động** | 3 bánh dạng Delta (2 bánh sau dẫn động độc lập, 1 bi cầu trước) | Đo đạc trên nguyên mẫu thực tế |
+| **Chiều dài tổng thể** | ~230 mm | Thước kẹp / Thước đo cơ khí |
+| **Chiều rộng cơ sở (Vệt bánh sau)** | ~165 mm | Đo từ tâm bánh trái sang tâm bánh phải |
+| **Chiều dài cơ sở** | ~175 mm | Đo từ trục bánh sau đến tâm bi cầu trước |
+| **Khoảng nhô cảm biến** | ~35 mm | Đo từ tâm bi cầu trước đến mặt phẳng mắt cảm biến |
+| **Đường kính bánh xe** | 42 mm (Đã bao gồm lốp cao su silicon) | Thước kẹp điện tử |
+| **Bề rộng lốp** | 22 mm | Thước kẹp điện tử |
+| **Khối lượng xe (Chưa có pin)** | ~210 g | Cân điện tử |
+| **Khối lượng bay (Kèm pin LiPo 3S 650mAh)** | ~285 g | Cân điện tử |
+| **Phân bổ trọng tâm (CoG)** | Trọng tâm thấp, dồn 65% về trục sau | Tối ưu bám đường cho bánh dẫn động |
