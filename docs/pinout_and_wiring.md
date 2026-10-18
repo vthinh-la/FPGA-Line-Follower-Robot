@@ -6,7 +6,7 @@ This document defines the complete physical pin mapping between the **Sipeed Tan
 
 ## 1. Tang Nano 9K Physical Constraints (CST) Mapping
 
-All FPGA pin assignments are specified in [`firmware/gowin_fpga/src/FPGA_DO_LINE.cst`](file:///d:/My%20Drive/KHO_LUU_TRU_DU_AN/02_ROBOTIC_THI_DAU/FPGA_XeDoLine/BACKUP%20CODE%20CHUAN/firmware/gowin_fpga/src/FPGA_DO_LINE.cst):
+All FPGA pin assignments are specified in [`firmware/gowin_fpga/src/FPGA_DO_LINE.cst`](../firmware/gowin_fpga/src/FPGA_DO_LINE.cst):
 
 | Net / Port | FPGA Pin (GW1NR-9) | I/O Standard | Pull Mode | Drive | Target Peripheral | Description |
 | :--- | :---: | :--- | :--- | :---: | :--- | :--- |

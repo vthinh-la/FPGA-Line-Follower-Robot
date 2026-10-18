@@ -16,7 +16,7 @@ Instructions for calibrating the optical line sensors, motor trim gain, and tuni
 
 ## 2. Motor Trim Gain Calibration
 
-Due to manufacturing tolerances in DC motors and gearbox friction, one motor will often spin slightly faster than the other. The Verilog RTL provides dedicated trim gain parameters in [`firmware/gowin_fpga/src/main.v`](file:///d:/My%20Drive/KHO_LUU_TRU_DU_AN/02_ROBOTIC_THI_DAU/FPGA_XeDoLine/BACKUP%20CODE%20CHUAN/firmware/gowin_fpga/src/main.v#L15-L16):
+Due to manufacturing tolerances in DC motors and gearbox friction, one motor will often spin slightly faster than the other. The Verilog RTL provides dedicated trim gain parameters in [`firmware/gowin_fpga/src/main.v`](../firmware/gowin_fpga/src/main.v#L15-L16):
 
 ```verilog
 parameter integer GAIN_PWMA_PCT = 98;  // Left Motor Trim (Percentage)

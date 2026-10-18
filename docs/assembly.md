@@ -6,7 +6,7 @@ This guide details the fabrication, 3D printing, and mechanical/electronic assem
 
 ## 1. 3D Printing Specifications
 
-The main chassis frame is located at [`mechanical/3d_models/chassis_frame.stl`](file:///d:/My%20Drive/KHO_LUU_TRU_DU_AN/02_ROBOTIC_THI_DAU/FPGA_XeDoLine/BACKUP%20CODE%20CHUAN/mechanical/3d_models/chassis_frame.stl).
+The main chassis frame is located at [`mechanical/3d_models/chassis_frame.stl`](../mechanical/3d_models/chassis_frame.stl).
 
 | Parameter | Recommended Value | Notes |
 | :--- | :--- | :--- |

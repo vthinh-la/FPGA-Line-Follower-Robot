@@ -85,7 +85,7 @@ flowchart TD
 | `PWMB` | **35** | Output | Right Motor 20 kHz PWM Speed Control |
 | `IN4`, `IN3` | **41, 42** | Output | Right Motor Direction & Active Reverse Brake |
 
-*For complete wiring and schematic connections, see [`docs/pinout_and_wiring.md`](file:///d:/My%20Drive/KHO_LUU_TRU_DU_AN/02_ROBOTIC_THI_DAU/FPGA_XeDoLine/BACKUP%20CODE%20CHUAN/docs/pinout_and_wiring.md).*
+*For complete wiring and schematic connections, see [`docs/pinout_and_wiring.md`](docs/pinout_and_wiring.md).*
 
 ---
 
@@ -102,14 +102,14 @@ flowchart TD
    git clone https://github.com/vthinh-la/FPGA-Line-Follower-Robot.git
    cd FPGA-Line-Follower-Robot
    ```
-2. Launch Gowin EDA, select **File -> Open Project**, and open [`firmware/gowin_fpga/FPGA_DO_LINE.gprj`](file:///d:/My%20Drive/KHO_LUU_TRU_DU_AN/02_ROBOTIC_THI_DAU/FPGA_XeDoLine/BACKUP%20CODE%20CHUAN/firmware/gowin_fpga/FPGA_DO_LINE.gprj).
+2. Launch Gowin EDA, select **File -> Open Project**, and open [`firmware/gowin_fpga/FPGA_DO_LINE.gprj`](firmware/gowin_fpga/FPGA_DO_LINE.gprj).
 3. In the Design Process pane:
    - Double click **Synthesize** to compile the Verilog source.
    - Double click **Place & Route** to generate the bitstream.
 4. Launch **Programmer**:
    - Device: `GW1NR-9C` (`GW1NR-LV9QN88PC6/I5`).
    - Operation: **sSRAM Program** (for temporary test) or **Embedded Flash Program** (for permanent boot on power-up).
-   - Select bitstream file: [`firmware/gowin_fpga/bitstream/FPGA_DO_LINE.fs`](file:///d:/My%20Drive/KHO_LUU_TRU_DU_AN/02_ROBOTIC_THI_DAU/FPGA_XeDoLine/BACKUP%20CODE%20CHUAN/firmware/gowin_fpga/bitstream/FPGA_DO_LINE.fs).
+   - Select bitstream file: [`firmware/gowin_fpga/bitstream/FPGA_DO_LINE.fs`](firmware/gowin_fpga/bitstream/FPGA_DO_LINE.fs).
    - Click **Program / Configure**.
 
 ---
