@@ -16,6 +16,12 @@ Dự án phần cứng và mã nguồn mở cho **Robot dò line tốc độ cao
 | :---: | :---: | :---: |
 | ![Mặt trên xe](media/robot_assembled_top.jpg) | ![Mặt dưới cảm biến](media/robot_underside_sensors.jpg) | ![CAD Fusion 360](media/cad_assembly_fusion360.jpg) |
 
+### 🎬 Video Chạy Thực Tế Trên Sa Hình Thi Đấu (ICTU Arena)
+
+![Video chạy thử nghiệm xe dò line FPGA](media/robot_race_demo.gif)
+
+> 📹 **Xem video đầy đủ (HD 720p 60fps):** [`media/robot_run_clip.mp4`](media/robot_run_clip.mp4) — Ghi lại toàn bộ lượt chạy thực tế của robot trên sa hình chữ "ICTU" tại cuộc thi Thiết kế Vi mạch & Điều khiển Robot Dò Line sử dụng FPGA, bo gọn các góc vuông 90° và tăng tốc tối đa trên các đoạn thẳng.
+
 ---
 
 ## ⚡ Điểm Nổi Bật Về Kỹ Thuật
