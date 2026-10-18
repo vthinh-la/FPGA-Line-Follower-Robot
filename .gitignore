@@ -1,0 +1,49 @@
+﻿# ==========================================
+# Gowin EDA Build and Intermediate Artifacts
+# ==========================================
+impl/temp/
+impl/gwsynthesis/
+impl/pnr/*.db
+impl/pnr/*.vg
+impl/pnr/*.pin.html
+impl/pnr/*.rpt.html
+impl/pnr/*.power.html
+impl/pnr/*.tr.html
+impl/pnr/*.timing_paths
+impl/pnr/cmd.do
+impl/pnr/device.cfg
+*.user
+*.user.*
+*.bak
+*.tmp
+*~
+
+# ==========================================
+# Operating System & Drive Files
+# ==========================================
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# ==========================================
+# Exclude Office & Thesis Reports
+# ==========================================
+*.docx
+*.doc
+*.pptx
+*.ppt
+*.xlsx
+*.xls
+*.rar
+*.zip
+
+# ==========================================
+# Keep Local Original Backups & Large Video
+# ==========================================
+/FPGA_DO_LINE_36s/
+/FPGA_DO_LINE_ORIGIN/
+/VID_*.mp4
+/Khung Xe Do Line.stl
+/Schematic_FPGA_*.png
+/PCB_PCB_FPGA_*.png
+/MVIMG_*.jpg
