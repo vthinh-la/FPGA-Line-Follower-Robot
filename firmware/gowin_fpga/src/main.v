@@ -36,14 +36,14 @@ module main (
     localparam integer DUTY_STEP_DOWN = (PWM_PERIOD * 60) / 100; 
 
     // ==========================================
-    // KHỐI 2: TẬP LUẬT FUZZY LOGIC (THAY THẾ PID)
+    // KHỐI 2: BỘ ĐIỀU KHIỂN PID PHÂN CẤP (GAIN-SCHEDULED PID)
     // ==========================================
-    // Các mức độ bẻ lái (Crisp Outputs)
-    localparam integer FZ_STEER_ZERO = 0;
-    localparam integer FZ_STEER_SOFT = (PWM_PERIOD * 8) / 100;   // Lệch nhẹ -> Nhích lái nhẹ (Đằm xe) - Giảm từ 6% để tránh chao
-    localparam integer FZ_STEER_MID  = (PWM_PERIOD * 10) / 100;  // Lệch vừa -> Bẻ lái vừa - Giảm từ 15%
-    localparam integer FZ_STEER_HARD = (PWM_PERIOD * 35) / 100;  // Lệch gắt -> Quặp đầu xe ngay lập tức
-    localparam integer FZ_DAMPING    = (PWM_PERIOD * 14) / 100;  // Lực hãm chống văng đuôi (Thay cho KD) - Tăng từ 8% để chống rung
+    // Các mức độ bẻ lái khâu P (Piecewise Proportional Outputs)
+    localparam integer PID_STEER_ZERO = 0;
+    localparam integer PID_STEER_SOFT = (PWM_PERIOD * 8) / 100;   // Lệch nhẹ -> Nhích lái nhẹ (Đằm xe) - Giảm từ 6% để tránh chao
+    localparam integer PID_STEER_MID  = (PWM_PERIOD * 10) / 100;  // Lệch vừa -> Bẻ lái vừa - Giảm từ 15%
+    localparam integer PID_STEER_HARD = (PWM_PERIOD * 35) / 100;  // Lệch gắt -> Quặp đầu xe ngay lập tức
+    localparam integer PID_DAMPING    = (PWM_PERIOD * 14) / 100;  // Lực hãm vi phân D chống văng đuôi xe - Tăng từ 8% để chống rung
     
     localparam integer PID_OUT_LIMIT = (PWM_PERIOD * 40) / 100; 
     localparam integer PID_OUT_LIMIT_CORNER = (PWM_PERIOD * 35) / 100; 
@@ -86,10 +86,10 @@ module main (
     reg signed [11:0] line_error_ctrl = 12'sd0;
     reg [11:0] abs_line_error_ctrl = 12'd0;
     
-    // Các biến dùng cho Fuzzy Logic
+    // Các biến dùng cho bộ điều khiển PID phân cấp
     reg signed [11:0] pid_prev_error = 12'sd0;
-    reg signed [15:0] fuzzy_steer_base = 16'sd0;
-    reg signed [15:0] fuzzy_damping = 16'sd0;
+    reg signed [15:0] pid_steer_p = 16'sd0;
+    reg signed [15:0] pid_damping_d = 16'sd0;
     reg signed [15:0] error_diff = 16'sd0;
     
     reg signed [31:0] pid_output = 32'sd0;
@@ -261,30 +261,30 @@ module main (
         end
     end
 
-    // MỜ HÓA & GIẢI MỜ (FUZZY LOGIC COMPUTATION)
+    // TÍNH TOÁN ĐIỀU KHIỂN PID (PIECEWISE P-D STEERING COMPUTATION)
     always @(*) begin
-        // 1. Tập luật tĩnh (Fuzzification Error)
-        if      (line_error_ctrl <= -5) fuzzy_steer_base =  FZ_STEER_HARD; // Rẽ Trái Gắt
-        else if (line_error_ctrl == -4) fuzzy_steer_base =  FZ_STEER_MID;  // Rẽ Trái Vừa
-        else if (line_error_ctrl == -3) fuzzy_steer_base =  FZ_STEER_MID;
-        else if (line_error_ctrl == -2) fuzzy_steer_base =  FZ_STEER_SOFT; // Rẽ Trái Nhẹ
-        else if (line_error_ctrl == -1) fuzzy_steer_base =  FZ_STEER_SOFT;
-        else if (line_error_ctrl ==  0) fuzzy_steer_base =  FZ_STEER_ZERO; // Tâm vạch
-        else if (line_error_ctrl ==  1) fuzzy_steer_base = -FZ_STEER_SOFT; // Rẽ Phải Nhẹ
-        else if (line_error_ctrl ==  2) fuzzy_steer_base = -FZ_STEER_SOFT;
-        else if (line_error_ctrl ==  3) fuzzy_steer_base = -FZ_STEER_MID;  // Rẽ Phải Vừa
-        else if (line_error_ctrl ==  4) fuzzy_steer_base = -FZ_STEER_MID;
-        else if (line_error_ctrl >=  5) fuzzy_steer_base = -FZ_STEER_HARD; // Rẽ Phải Gắt
-        else                            fuzzy_steer_base =  FZ_STEER_ZERO;
+        // 1. Khâu Tỉ lệ P phân cấp theo sai số lệch tâm (Proportional Steering)
+        if      (line_error_ctrl <= -5) pid_steer_p =  PID_STEER_HARD; // Rẽ Trái Gắt
+        else if (line_error_ctrl == -4) pid_steer_p =  PID_STEER_MID;  // Rẽ Trái Vừa
+        else if (line_error_ctrl == -3) pid_steer_p =  PID_STEER_MID;
+        else if (line_error_ctrl == -2) pid_steer_p =  PID_STEER_SOFT; // Rẽ Trái Nhẹ
+        else if (line_error_ctrl == -1) pid_steer_p =  PID_STEER_SOFT;
+        else if (line_error_ctrl ==  0) pid_steer_p =  PID_STEER_ZERO; // Tâm vạch
+        else if (line_error_ctrl ==  1) pid_steer_p = -PID_STEER_SOFT; // Rẽ Phải Nhẹ
+        else if (line_error_ctrl ==  2) pid_steer_p = -PID_STEER_SOFT;
+        else if (line_error_ctrl ==  3) pid_steer_p = -PID_STEER_MID;  // Rẽ Phải Vừa
+        else if (line_error_ctrl ==  4) pid_steer_p = -PID_STEER_MID;
+        else if (line_error_ctrl >=  5) pid_steer_p = -PID_STEER_HARD; // Rẽ Phải Gắt
+        else                            pid_steer_p =  PID_STEER_ZERO;
 
-        // 2. Tập luật động học (Fuzzification Derivative) - Hãm văng đuôi
+        // 2. Khâu Vi phân D giảm chấn động học (Derivative Damping) - Hãm văng đuôi
         error_diff = line_error_ctrl - pid_prev_error;
-        if      (error_diff >=  2) fuzzy_damping = -FZ_DAMPING; // Lao ra phải nhanh -> Ép ngược lại
-        else if (error_diff <= -2) fuzzy_damping =  FZ_DAMPING; // Lao ra trái nhanh -> Ép ngược lại
-        else                       fuzzy_damping =  0;
+        if      (error_diff >=  2) pid_damping_d = -PID_DAMPING; // Lao ra phải nhanh -> Ép ngược lại
+        else if (error_diff <= -2) pid_damping_d =  PID_DAMPING; // Lao ra trái nhanh -> Ép ngược lại
+        else                       pid_damping_d =  0;
 
-        // 3. Giải mờ (Defuzzification) gộp thành tín hiệu Vector lái
-        pid_output = fuzzy_steer_base + fuzzy_damping;
+        // 3. Tổng hợp tín hiệu điều khiển lái PID (pid_output = P + D)
+        pid_output = pid_steer_p + pid_damping_d;
 
         if (pid_output > PID_OUT_LIMIT) begin
             pid_output = PID_OUT_LIMIT;
